@@ -130,10 +130,11 @@ main :: IO ()
 main = do
 	wordBoxes <- getContents >>= (return . convert . canonicalizeTags . parseTags)
 	forM_ wordBoxes $ \ page -> do
-		putStrLn "next page"
+		putStrLn ""
+--		putStrLn "next page"
 		let levels = mergePage $ map (reboxBy (intercalate " ") . sortBy (comparing left)) $ cluster 0.0 1.0 $ snd page
 		forM_ levels $  \level -> do
-			putStrLn "next level"
+--			putStrLn "next level"
 			let paragraphs = map (unwordHyphens . map content . content) $ concat level
 			let regroupedChunks = map unwordHyphens $ groupBy (\w _ -> w =~ "-$") paragraphs
 			mapM_ (putStrLn . ("\t" ++)) regroupedChunks
