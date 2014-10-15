@@ -135,6 +135,9 @@ main = do
 		let levels = mergePage $ map (reboxBy (intercalate " ") . sortBy (comparing left)) $ cluster 0.0 1.0 $ snd page
 		forM_ levels $  \level -> do
 --			putStrLn "next level"
-			let paragraphs = map (unwordHyphens . map content . content) $ concat level
-			let regroupedChunks = map unwordHyphens $ groupBy (\w _ -> w =~ "-$") paragraphs
-			mapM_ (putStrLn . ("\t" ++)) regroupedChunks
+			forM_ level $ \column -> do
+				forM_ column $ \paragraph -> do
+					putStrLn $ unwordHyphens $ map content $ content paragraph 
+--			let paragraphs = map (unwordHyphens . map content . content) $ concat level
+--			let regroupedChunks = map unwordHyphens $ groupBy (\w _ -> w =~ "-$") paragraphs
+--			mapM_ (putStrLn . ("\t" ++)) regroupedChunks
